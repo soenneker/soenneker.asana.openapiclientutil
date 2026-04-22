@@ -1,20 +1,19 @@
 using Soenneker.Asana.OpenApiClientUtil.Abstract;
-using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Asana.OpenApiClientUtil.Tests;
 
-[Collection("Collection")]
-public sealed class AsanaOpenApiClientUtilTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public sealed class AsanaOpenApiClientUtilTests : HostedUnitTest
 {
     private readonly IAsanaOpenApiClientUtil _openapiclientutil;
 
-    public AsanaOpenApiClientUtilTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public AsanaOpenApiClientUtilTests(Host host) : base(host)
     {
         _openapiclientutil = Resolve<IAsanaOpenApiClientUtil>(true);
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
