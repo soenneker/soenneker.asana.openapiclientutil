@@ -14,7 +14,6 @@ using Soenneker.Utils.AsyncSingleton;
 
 namespace Soenneker.Asana.OpenApiClientUtil;
 
-///<inheritdoc cref="IAsanaOpenApiClientUtil"/>
 public sealed class AsanaOpenApiClientUtil : IAsanaOpenApiClientUtil
 {
     private readonly AsyncSingleton<AsanaOpenApiClient> _client;
@@ -26,10 +25,11 @@ public sealed class AsanaOpenApiClientUtil : IAsanaOpenApiClientUtil
             HttpClient httpClient = await httpClientUtil.Get(token).NoSync();
 
             var apiKey = configuration.GetValueStrict<string>("Asana:ApiKey");
+            string authHeaderName = configuration["Asana:AuthHeaderName"] ?? "Authorization";
             string authHeaderValueTemplate = configuration["Asana:AuthHeaderValueTemplate"] ?? "Bearer {token}";
             string authHeaderValue = authHeaderValueTemplate.Replace("{token}", apiKey, StringComparison.Ordinal);
 
-            var requestAdapter = new HttpClientRequestAdapter(new GenericAuthenticationProvider(headerValue: authHeaderValue), httpClient: httpClient);
+            var requestAdapter = new HttpClientRequestAdapter(new GenericAuthenticationProvider(authHeaderName, authHeaderValue), httpClient: httpClient);
 
             return new AsanaOpenApiClient(requestAdapter);
         });
@@ -40,18 +40,11 @@ public sealed class AsanaOpenApiClientUtil : IAsanaOpenApiClientUtil
         return _client.Get(cancellationToken);
     }
 
-    /// <summary>
-    /// Releases resources used by the current instance.
-    /// </summary>
     public void Dispose()
     {
         _client.Dispose();
     }
 
-    /// <summary>
-    /// Asynchronously releases resources used by the current instance.
-    /// </summary>
-    /// <returns>A task that represents the asynchronous operation.</returns>
     public ValueTask DisposeAsync()
     {
         return _client.DisposeAsync();
