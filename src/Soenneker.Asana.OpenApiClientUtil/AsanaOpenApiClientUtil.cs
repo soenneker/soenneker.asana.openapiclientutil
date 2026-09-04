@@ -14,6 +14,7 @@ using Soenneker.Utils.AsyncSingleton;
 
 namespace Soenneker.Asana.OpenApiClientUtil;
 
+/// <inheritdoc cref="IAsanaOpenApiClientUtil" />
 public sealed class AsanaOpenApiClientUtil : IAsanaOpenApiClientUtil
 {
     private readonly AsyncSingleton<AsanaOpenApiClient> _client;
