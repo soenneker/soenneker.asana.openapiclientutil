@@ -25,7 +25,7 @@ public sealed class AsanaOpenApiClientUtil : IAsanaOpenApiClientUtil
         {
             HttpClient httpClient = await httpClientUtil.Get(token).NoSync();
 
-            var apiKey = configuration.GetValueStrict<string>("Asana:ApiKey");
+            var apiKey = configuration.GetStringStrict("Asana:ApiKey");
             string authHeaderName = configuration["Asana:AuthHeaderName"] ?? "Authorization";
             string authHeaderValueTemplate = configuration["Asana:AuthHeaderValueTemplate"] ?? "Bearer {token}";
             string authHeaderValue = authHeaderValueTemplate.Replace("{token}", apiKey, StringComparison.Ordinal);
