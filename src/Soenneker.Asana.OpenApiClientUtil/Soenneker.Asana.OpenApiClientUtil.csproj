@@ -45,7 +45,7 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Kiota.GenericAuthenticationProvider" Version="11.0.59" />
-        <PackageReference Include="Soenneker.Asana.HttpClients" Version="11.0.164" />
-        <PackageReference Include="Soenneker.Asana.OpenApiClient" Version="11.0.112" />
+        <PackageReference Include="Soenneker.Asana.HttpClients" Version="11.0.165" />
+        <PackageReference Include="Soenneker.Asana.OpenApiClient" Version="11.0.113" />
     </ItemGroup>
 </Project>
